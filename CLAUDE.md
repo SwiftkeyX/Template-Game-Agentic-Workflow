@@ -17,7 +17,18 @@ Key coplay workflow:
 
 ## Project-Specific Rules
 
-See `.claude/rules/` for this game's architecture and design decisions.
+Read these docs before implementing features or making design decisions:
+
+- `docs/design/game-vision.md` — full creative vision (genre, pillars, mechanics, art/audio direction)
+- `docs/design/design-decisions.md` — locked decisions, canonical terminology, spatial constraints
+- `docs/design/systems-design.md` — every system, its responsibility, dependencies, and tier
+- `docs/design/technical-design/` — per-system detailed GDDs (copy `_template.md` for each system)
+- `docs/technical/technical-preferences.md` — engine version, platform, performance budgets, testing requirements
+- `docs/technical/best-practices.md` — project-critical patterns + Unity 6 current patterns (read before writing any code)
+- `docs/technical/architecture.md` — script responsibilities, component patterns, input conventions
+- `docs/technical/coding-style.md` — required patterns and anti-patterns
+- `docs/technical/asset-conventions.md` — folder layout, naming rules, import settings
+- `docs/process/known-issues.md` — open/fixed bugs (check before implementing related systems)
 
 ## Collaboration Rules
 
@@ -25,7 +36,7 @@ See `.claude/rules/` for this game's architecture and design decisions.
 
 | Store as | Where | When to use |
 |---|---|---|
-| **Rule** | `CLAUDE.md` or `.claude/rules/` | Invariant constraints — architecture, coding standards, Claude behavior. Always loaded. |
+| **Rule** | `CLAUDE.md` or `docs/` | Invariant constraints — architecture, coding standards, Claude behavior. Read on demand. |
 | **Memory** | `memory/` (project or global) | Contextual facts that evolve. Recalled when relevant. |
 
 ### Claude Behavior

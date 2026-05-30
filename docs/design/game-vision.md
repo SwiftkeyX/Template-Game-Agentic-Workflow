@@ -1,6 +1,6 @@
-# Game Design Document (GDD)
+# Game Vision Document
 
-> This file is a template. Fill in each section before starting development. Claude reads this to stay aligned with your vision throughout the project.
+> Full creative vision — what this game is. Genre, pillars, mechanics, art/audio direction. Fill every section before development begins. Claude reads this to stay aligned with your vision throughout the project.
 
 ## Overview
 
