@@ -2,6 +2,12 @@ Audit all `.md` files in this project for broken path references and stale doc-i
 
 ---
 
+## Agent
+
+`claude`
+
+---
+
 ## Step 1 — Discover all .md files
 
 Use Glob with pattern `**/*.md` from the project root. This is your working set.
@@ -52,19 +58,20 @@ Collect all broken references (source file, line number, raw text, resolved path
 
 Check four structural sections that catalog files and drift after reorganizations:
 
-**5a. `CLAUDE.md` "Project-Specific Rules" bullet list**
+**5a. `.claude/docs/index.md` entry list**
+- Read `.claude/docs/index.md` and extract every path reference (Pattern A)
 - Verify each listed path exists on disk
-- Run `Glob docs/**/*.md` and `Glob docs/*.md` — flag any doc file NOT in the bullet list as a gap (newly added file not yet indexed)
+- Run `Glob .claude/docs/**/*.md` and `Glob .claude/docs/*.md` — flag any doc file NOT referenced in `index.md` as a gap (newly added file not yet indexed)
 
 **5b. `README.md` file tables**
 - For each table row, verify the path in column 1 exists
 - Check each table's directory scope for unlisted files
 
-**5c. `docs/PIPELINE.md` checked tasks only**
+**5c. `.claude/docs/PIPELINE.md` checked tasks only**
 - For `- [x]` items that reference a file path: verify the file exists. A checked task referencing a missing file means the file was moved after completion.
 - Do NOT flag `- [ ]` items — future tasks referencing files not yet created is expected and correct.
 
-**5d. `docs/process/onboarding.md`**
+**5d. `.claude/template-docs/process/onboarding.md`**
 - Verify all `docs/` paths and `Assets/` paths in the Setup Steps section exist
 
 ---
@@ -80,7 +87,7 @@ Group by source file:
 ```
 FILE: docs/process/onboarding.md
   Line 18  `docs/build-notes.md`  → [FILE NOT FOUND]
-            Likely intended: docs/process/build-notes.md
+            Likely intended: docs/beta/build-notes.md
 ```
 
 When a broken path has exactly one Glob match by filename anywhere in the project, add a "Likely intended:" line.
@@ -89,7 +96,7 @@ When a broken path has exactly one Glob match by filename anywhere in the projec
 
 ```
 CLAUDE.md doc index — files on disk not listed:
-  docs/process/changelog.md
+  docs/beta/changelog.md
 
 README.md — rows for files that no longer exist:
   (none)
@@ -138,10 +145,10 @@ Do not touch paths flagged MANUAL (zero matches or multiple matches).
 
 ## Step 9 — Update index sections (if user said yes)
 
-**CLAUDE.md doc index:**
-1. Read CLAUDE.md
-2. Build corrected bullet list: keep existing valid entries, remove entries for missing files, add entries for new files (extract description from the file's first `#` heading line)
-3. Edit to replace only the bullet block — leave all surrounding content untouched
+**`.claude/docs/index.md` entry list:**
+1. Read `.claude/docs/index.md`
+2. Build corrected entry list: keep existing valid entries, remove entries for missing files, add entries for new files (extract description from the file's first `#` heading line; add a "Consult when:" trigger line)
+3. Edit to replace only the affected entry — leave all surrounding content untouched
 
 **README.md tables:**
 1. Read README.md
