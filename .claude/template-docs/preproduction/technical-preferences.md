@@ -69,11 +69,11 @@ Set these after your first profiling pass. Leave as TBD until then.
 
 ## Architecture Decisions Log
 
-<!-- Quick reference linking to full ADR files in docs/adr/. -->
+<!-- Quick reference linking to full ADR files in docs/other/adr/. -->
 <!-- Create a new ADR file for every significant technical decision. -->
-<!-- Format: [Short title](../docs/adr/adr-NNN-title.md) — one-line summary -->
+<!-- Format: [Short title](../other/adr/adr-NNN-title.md) — one-line summary -->
 
-- *(No ADRs yet — create docs/adr/adr-001-*.md for your first decision)*
+- *(No ADRs yet — create docs/other/adr/adr-001-*.md for your first decision)*
 
 ## Agent / Specialist Routing
 

@@ -1,4 +1,6 @@
-Lightweight bug logger: captures one bug immediately without derailing the current session. Writes a structured card to known-issues.md and hands control back. Does NOT fix the bug — that is /open-session-for-fix-all-bug's job.
+**[INTERNAL — reached only via `/debug`. Do not invoke directly.]**
+
+Lightweight bug logger: captures one bug immediately without derailing the current session. Writes a structured card to known-issues.md and hands control back. Does NOT fix the bug — fixing is done later via `/debug`.
 
 ---
 
@@ -74,7 +76,7 @@ Remove the placeholder `*(no open issues yet)*` line if it is still present.
 
 **Step 4 — Confirm and resume**
 
-Report: "Bug #N logged. Resume what you were doing — run `/open-session-for-fix-all-bug` when ready to fix it."
+Report: "Bug #N logged. Resume what you were doing — run `/debug` when ready to fix it."
 
 ---
 

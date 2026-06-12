@@ -36,15 +36,15 @@ If all Phase 3 items are `[x]`, report "Phase 3 complete." and stop.
 | PIPELINE.md item | Step-skill |
 |---|---|
 | Juice pass | `/juice-pass` |
-| Feel tuning | `/tuning-loop` |
-| Difficulty tuning | `/tuning-loop` |
-| Bug pass | `/open-session-for-fix-all-bug` |
+| Feel tuning | `/tune-pass` |
+| Difficulty tuning | `/tune-pass` |
+| Bug pass | `/fix-all-bugs` |
 | Performance pass | `/performance-pass` |
-| Ship | `/ship` |
+| Ship | `/release-pass` |
 
 Run the step-skill for the first unchecked item. After it completes and ticks its PIPELINE.md item, continue automatically to the next unchecked item.
 
-**Note on `/tuning-loop`:** It reads PIPELINE.md to self-identify whether it is running a feel pass or a difficulty pass — invoke it the same way for both.
+**Note on `/tune-pass`:** It reads PIPELINE.md to self-identify whether it is running a feel pass or a difficulty pass — invoke it the same way for both.
 
 ---
 

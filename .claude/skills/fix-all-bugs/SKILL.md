@@ -1,3 +1,5 @@
+**[INTERNAL — reached only via `/debug` (or the Phase 3 `/beta-task`). Do not invoke directly.]**
+
 Step-skill: fixes all open bugs in known-issues.md one at a time, verifying each fix before moving on.
 
 ---

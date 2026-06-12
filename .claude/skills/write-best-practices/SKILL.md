@@ -12,8 +12,8 @@ Step-skill: writes best-practices.md, capturing project-critical coding patterns
 
 | Doc | Read/Write | Purpose |
 |---|---|---|
-| `.claude/docs/preproduction/architecture.md` | Read | Communication patterns become hard rules |
-| `.claude/template-docs/technical/best-practices.md` | Read | Required structure |
+| `.claude/docs/preproduction/architecture.md` | Read | Communication patterns become hard rules (frozen artifact) |
+| `.claude/template-docs/preproduction/best-practices.md` | Read | Required structure |
 | `.claude/docs/preproduction/best-practices.md` | Read (if exists) + Write | Output doc |
 | `.claude/docs/PIPELINE.md` | Read + Write | Tick item and Milestone 0 on completion |
 | `.claude/rules-for-skill/rule-what-to-do-get-block-by-previous-step.md` | Read | When to call /regress instead of patching |
@@ -23,7 +23,7 @@ Step-skill: writes best-practices.md, capturing project-critical coding patterns
 
 ## Entry Condition
 
-`architecture.md` must exist. If missing, call `/regress "Fill out architecture.md" "required before best-practices"`.
+`preproduction/architecture.md` must exist. If missing, call `/regress "Fill out preproduction/architecture.md" "required before best-practices"`.
 
 ---
 

@@ -13,7 +13,8 @@ Step-skill: implements one system in Unity from its approved GDD. Run by /produc
 | Doc | Read/Write | Purpose |
 |---|---|---|
 | `.claude/docs/production/gdd/<SystemName>.md` | Read | Approved GDD — implementation source of truth |
-| `.claude/docs/preproduction/architecture.md` | Read | Communication patterns and allowed references |
+| `.claude/docs/preproduction/systems-design.md` | Read | Tier membership and inter-system dependencies — used by Step 0 to identify parallel candidates (frozen artifact, valid for tier info) |
+| `.claude/docs/production/gdd/<SystemName>.md` | Read | Communication patterns, SRP, and allowed references — primary implementation spec |
 | `.claude/docs/preproduction/best-practices.md` | Read | Project-critical patterns — override everything |
 | `.claude/docs/preproduction/technical-preferences.md` | Read | Performance budgets to respect while coding |
 | `.claude/docs/project-snapshot-index.md` | Read (if exists) + Write | Current scene state; update after changes |
@@ -25,6 +26,12 @@ Step-skill: implements one system in Unity from its approved GDD. Run by /produc
 
 ---
 
+## Project Snapshot Index
+
+See `rule-read-write-unity.md` — full instructions (path, fallback generation, manual template, and post-change refresh) live there so all Unity skills share them.
+
+---
+
 ## Entry Condition
 
 GDD at `.claude/docs/production/gdd/<SystemName>.md` must exist and be approved. If missing, call `/regress "Design <SystemName> GDD" "GDD required before coding"`.
@@ -32,6 +39,24 @@ GDD at `.claude/docs/production/gdd/<SystemName>.md` must exist and be approved.
 ---
 
 ## Steps
+
+**Step 0 — Parallel spawn for independent co-tier systems (lead system only)**
+
+1. Read `preproduction/systems-design.md` to find which tier this system belongs to and its full dependency list.
+2. Read `PIPELINE.md` to get all unchecked systems in the same tier.
+3. For each unchecked co-tier system, check if it and the current system are mutually independent (neither lists the other as a dependency in `systems-design.md`).
+4. For each independent co-tier system whose GDD exists at `.claude/docs/production/gdd/<SystemName>.md`:
+   - Spawn a parallel `gameplay-programmer` agent with the full Steps 1–10 instructions for that system.
+   - Include this instruction in the agent prompt: **"Do NOT run Step 0 — you are a parallel child agent."**
+5. Wait for all parallel agents to complete before continuing to Step 1 for the current (lead) system.
+
+If no independent co-tier systems are pending, skip directly to Step 1.
+
+---
+
+**Steps 1–10 — Implementation (run by lead and parallel child agents)**
+
+> The pre-code GDD gate applies here too: run `/read-gdd` first. During production the GDD was just approved in Sub-phase A, so this is usually a quick confirm — but if implementing reveals the GDD is wrong, stop and run `/write-gdd` to correct it before coding, then continue.
 
 1. Read all input docs in the order listed above
 2. **Verify editor state** — call `get_unity_editor_state` and `list_game_objects_in_hierarchy`
@@ -59,3 +84,4 @@ GDD at `.claude/docs/production/gdd/<SystemName>.md` must exist and be approved.
 
 - Never start coding without reading the GDD first
 - Never tick PIPELINE.md before `play_game` passes
+- Spawned parallel child agents must skip Step 0 — Step 0 is the lead system's responsibility only (prevents infinite recursion)
