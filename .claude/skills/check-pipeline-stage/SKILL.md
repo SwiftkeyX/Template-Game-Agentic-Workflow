@@ -73,7 +73,7 @@ Call `get_worst_gc_frames`. If any steady-state frame shows non-zero GC alloc, r
 
 **Ship:**
 - Confirm all other Phase 3 items are `[x]` in PIPELINE.md
-- Read `process/build-notes.md` and confirm every checklist item is ticked
+- Read `beta/build-notes.md` and confirm every checklist item is ticked
 If anything is unticked, list what remains and refuse.
 
 If the gate passes: update `- [ ]` to `- [x]` and report "Gate passed — item checked off."

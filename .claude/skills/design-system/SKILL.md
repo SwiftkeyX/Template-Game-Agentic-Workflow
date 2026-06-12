@@ -12,10 +12,10 @@ Step-skill: creates the technical design GDD for one system. Run by /production-
 
 | Doc | Read/Write | Purpose |
 |---|---|---|
-| `.claude/docs/preproduction/systems-design.md` | Read | Verify tier, responsibility, and dependencies |
-| `.claude/docs/preproduction/architecture.md` | Read | Script name and communication pattern |
+| `.claude/docs/preproduction/systems-design.md` | Read | Verify tier and dependency assignments (frozen artifact) |
+| `.claude/docs/preproduction/architecture.md` | Read | Script naming conventions (frozen artifact) |
 | `.claude/docs/preproduction/best-practices.md` | Read | Project-critical patterns the GDD must respect |
-| `.claude/template-docs/design/gdd/_template.md` | Read | Required GDD structure |
+| `.claude/template-docs/production/gdd/_template.md` | Read | Required GDD structure |
 | `.claude/docs/production/gdd/<SystemName>.md` | Read (if exists) + Write | Output GDD |
 | `.claude/docs/PIPELINE.md` | Read | Confirm system is a listed Phase 2 item |
 | `.claude/rules-for-skill/rule-what-to-do-get-block-by-previous-step.md` | Read | When to call /regress instead of patching |
@@ -24,7 +24,7 @@ Step-skill: creates the technical design GDD for one system. Run by /production-
 
 ## Entry Condition
 
-`systems-design.md`, `architecture.md`, and `best-practices.md` must all exist. If any is missing, call `/regress` on that item before proceeding.
+`preproduction/systems-design.md`, `preproduction/architecture.md`, and `best-practices.md` must all exist. If any is missing, call `/regress` on that item before proceeding.
 
 ---
 

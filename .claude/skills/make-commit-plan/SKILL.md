@@ -8,6 +8,16 @@ Review all pending changes, group them into logical atomic commits, present the 
 
 ---
 
+## Step 0 — Branch check (hard block)
+
+Run `git branch --show-current`. If it is `main` (or the default branch), **STOP — do not commit:**
+
+> "You're on `main`. Git hygiene: commits don't land on `main`. Run `/start-branch` first, or tell me a task description and I'll create `<type>/<desc>` now."
+
+Do not proceed to Step 1 until the current branch is a non-`main` feature branch. (See `.claude/rules/git-hygiene.md`.)
+
+---
+
 ## Step 1 — Audit current state
 
 Run `git status` and `git diff --stat` to list all modified and untracked files.
@@ -107,10 +117,25 @@ Run `git log --oneline -5` and display the output so the user can verify what la
 
 ---
 
+## Step 8 — Offer to push, then auto-open the PR
+
+The commits are on a feature branch (guaranteed by Step 0). Offer to push:
+
+> "Commits are on `<branch>`. Push to `origin`? (`yes` / `no`)"
+
+On `yes`: `git push -u origin <branch>`. Once the push succeeds, **automatically run `/open-pr`** — do not make the user run it as a separate step. Then hand off:
+
+> "Pushed and PR opened. Review it on GitHub; when you're done, tell me and I'll run `/reconcile-gdd`."
+
+On `no`: stop; leave the commits local (no PR).
+
+---
+
 ## Constraints
 
 - **Never** use `git add .` / `git add -A` / `git commit -a` / `git commit --amend`
-- **Never** push unless the user explicitly asks after this skill completes
+- **Never** commit on `main` — Step 0 hard-blocks it; the user must be on a feature branch
+- **Push only via Step 8** (offer + explicit `yes`) — never silently, never force-push
 - **Abort** the entire sequence if compile errors are found — report the errors clearly
 - **Ask the user** when grouping is ambiguous — never guess
 - **One commit at a time** — complete Step 6 fully for each group before moving to the next

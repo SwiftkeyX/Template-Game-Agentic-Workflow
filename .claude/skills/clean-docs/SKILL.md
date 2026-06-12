@@ -71,7 +71,7 @@ Check four structural sections that catalog files and drift after reorganization
 - For `- [x]` items that reference a file path: verify the file exists. A checked task referencing a missing file means the file was moved after completion.
 - Do NOT flag `- [ ]` items — future tasks referencing files not yet created is expected and correct.
 
-**5d. `.claude/template-docs/process/onboarding.md`**
+**5d. `.claude/template-docs/other/onboarding.md`**
 - Verify all `docs/` paths and `Assets/` paths in the Setup Steps section exist
 
 ---
@@ -85,7 +85,7 @@ Output a structured report. Skip any section that has zero findings.
 Group by source file:
 
 ```
-FILE: docs/process/onboarding.md
+FILE: .claude/template-docs/other/onboarding.md
   Line 18  `docs/build-notes.md`  → [FILE NOT FOUND]
             Likely intended: docs/beta/build-notes.md
 ```
@@ -96,7 +96,7 @@ When a broken path has exactly one Glob match by filename anywhere in the projec
 
 ```
 CLAUDE.md doc index — files on disk not listed:
-  docs/beta/changelog.md
+  docs/other/changelog.md
 
 README.md — rows for files that no longer exist:
   (none)

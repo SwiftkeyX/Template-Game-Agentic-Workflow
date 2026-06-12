@@ -9,8 +9,8 @@ Debug router: single entry point when you find a bug. Asks one question and rout
 1. Ask the user:
    > "What do you need?
    > **a) Just log it** — you're mid-session and want to capture it without stopping → /log-bug
-   > **b) Fix it right now** — you know exactly what's broken → /fix-bug-right-now
-   > **c) Fix all open bugs** — Phase 3, work through everything in known-issues.md → /open-session-for-fix-all-bug"
+   > **b) Fix it right now** — you know exactly what's broken → /fix-bug
+   > **c) Fix all open bugs** — Phase 3, work through everything in known-issues.md → /fix-all-bugs"
 
 2. Route to the chosen skill.
 

@@ -38,9 +38,28 @@ After all GDDs exist:
 
 Wait for explicit user approval before proceeding to Sub-phase B.
 
-**Step 3 — Sub-phase B: Code All (auto-sequential)**
+**Step 3 — Sub-phase B: Code All (auto-sequential, with Core Playable gate)**
 
-For each system in PIPELINE.md Phase 2 that is still unchecked, run `/code-system` for that system. Work in tier order: Tier 1 → Tier 2 → Tier 3. Continue automatically to the next system after each passes its test and is ticked.
+For each system in PIPELINE.md Phase 2 that is still unchecked, run `/code-system` in order:
+Tier 1 → Tier 2 Core Invader Loop → [gate] → Tier 2 Advanced Features → Tier 3.
+
+**When all Core Invader Loop systems are ticked and the Core Playable gate line is reached:**
+
+1. Call `play_game`. Let it run for 10–15 seconds. Call `stop_game`.
+2. Check the console for errors.
+3. Present to the user:
+
+   > "⏸️ Core Playable gate reached.
+   > The base invader loop is implemented: player moves + shoots, enemies march and die, win/lose triggers.
+   > Console: [clean / N errors found].
+   >
+   > Please play-test the game. Reply 'continue' when the base game feels right, or describe any issues to fix first.
+   >
+   > Remaining after this gate: MothershipBoss, PowerUpSystem, then Tier 3."
+
+4. Wait for explicit user confirmation before running `/code-system` for MothershipBoss.
+5. If user describes issues, fix them (via `/debug` or inline), then re-test, then re-present the gate message.
+6. After confirmation, continue with Tier 2 Advanced Features then Tier 3 as normal.
 
 After all systems are checked:
 - Confirm Milestone 1 is ticked (all Tier 1 + Tier 2 systems done)
@@ -60,3 +79,4 @@ Milestone 2 = [x] in PIPELINE.md.
 ## Constraints
 
 - Sub-phase B must not begin before the user explicitly approves all GDDs
+- Sub-phase B must pause at the Core Playable gate and wait for user confirmation before continuing to Tier 2 Advanced Features (MothershipBoss, PowerUpSystem)
