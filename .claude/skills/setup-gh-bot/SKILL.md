@@ -14,7 +14,7 @@ One-time setup: registers a GitHub App as a bot contributor so Claude can post P
 |---|---|---|
 | `.env` | Read + Write | App ID, Installation ID, private key path |
 | `.gitignore` | Read + Write | Ensure secrets are never committed |
-| `refresh-gh-token.py` | Write | Python script that generates the installation token |
+| `.claude/scripts/refresh-gh-token.py` | Write | Python script that generates the installation token |
 | `.gh-token` | Write (via script) | Short-lived token read by `gh` calls; gitignored |
 
 ---
@@ -23,7 +23,7 @@ One-time setup: registers a GitHub App as a bot contributor so Claude can post P
 
 **Step 1 — Check if already set up**
 
-Check whether `.env` and `refresh-gh-token.py` both exist at the project root.
+Check whether `.env` and `.claude/scripts/refresh-gh-token.py` both exist.
 - If both exist → skip to Step 4.
 - If either is missing → continue to Step 2.
 
@@ -65,7 +65,7 @@ GITHUB_APP_PRIVATE_KEY_PATH=<value from user>
 
 **Step 3c — refresh-gh-token.py**
 
-Write `refresh-gh-token.py` at the project root with this exact content (stdlib + system `openssl` only — no third-party packages):
+Write `.claude/scripts/refresh-gh-token.py` with this exact content (stdlib + system `openssl` only — no third-party packages):
 
 ```python
 import os, time, json, base64, urllib.request, urllib.error, subprocess, tempfile
@@ -83,8 +83,9 @@ def load_env(path):
                 env[k.strip()] = v.strip()
     return env
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-env = load_env(os.path.join(script_dir, '.env'))
+# Two levels up from .claude/scripts/ → project root
+project_root = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
+env = load_env(os.path.join(project_root, '.env'))
 
 app_id          = env['GITHUB_APP_ID']
 installation_id = env['GITHUB_APP_INSTALLATION_ID']
@@ -140,8 +141,7 @@ except urllib.error.HTTPError as e:
 token   = data['token']
 expires = data['expires_at']
 
-token_file = os.path.join(script_dir, '.gh-token')
-with open(token_file, 'w') as f:
+with open(os.path.join(project_root, '.gh-token'), 'w') as f:
     f.write(token)
 
 print(f"Done. Expires: {expires}")
@@ -154,10 +154,10 @@ print(f"Preview: {token[:15]}...")
 
 Run:
 ```
-python refresh-gh-token.py
+python .claude/scripts/refresh-gh-token.py
 ```
 
-- On success: script prints `Done. Expires: ...` and writes `.gh-token`.
+- On success: script prints `Done. Expires: ...` and writes `.gh-token` at the project root.
 - On failure: report the error to the user and stop — do not continue to Step 5.
 
 ---
@@ -182,14 +182,14 @@ If no open PR exists, skip the comment and tell the user: "No open PR found. Tok
 
 ## Exit Condition
 
-`.gh-token` exists and is non-empty. Test comment posted (or skipped with notice if no open PR).
+`.gh-token` exists at the project root and is non-empty. Test comment posted (or skipped with notice if no open PR).
 
 ---
 
 ## Constraints
 
 - Never commit `.env`, `*.pem`, or `.gh-token` — these are secrets
-- Never use PowerShell for token generation — use `python refresh-gh-token.py`
+- Never use PowerShell for token generation — use `python .claude/scripts/refresh-gh-token.py`
 - Never install third-party packages — the script uses Python stdlib + system `openssl` only
 - On re-runs, skip Steps 2–3 and go straight to Step 4 — do not overwrite existing `.env`
-- `refresh-gh-token.py` must be re-run every ~1 hour when the token expires
+- `.claude/scripts/refresh-gh-token.py` must be re-run every ~1 hour when the token expires
