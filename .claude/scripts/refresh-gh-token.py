@@ -36,9 +36,22 @@ with tempfile.NamedTemporaryFile(delete=False, suffix='.pem') as kf:
 with tempfile.NamedTemporaryFile(delete=False) as sf:
     sf_path = sf.name
 
+def find_openssl():
+    from shutil import which
+    found = which('openssl')
+    if found:
+        return found
+    # Fall back to the openssl bundled with Git for Windows (not on PATH by default)
+    for p in (r'C:\Program Files\Git\usr\bin\openssl.exe',
+              r'C:\Program Files\Git\mingw64\bin\openssl.exe',
+              r'C:\Program Files (x86)\Git\usr\bin\openssl.exe'):
+        if os.path.exists(p):
+            return p
+    return 'openssl'
+
 try:
     subprocess.run(
-        ['openssl', 'dgst', '-sha256', '-sign', kf_path, '-out', sf_path],
+        [find_openssl(), 'dgst', '-sha256', '-sign', kf_path, '-out', sf_path],
         input=signing_input, check=True, capture_output=True
     )
     with open(sf_path, 'rb') as sf:
